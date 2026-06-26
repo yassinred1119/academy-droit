@@ -1,5 +1,7 @@
+
 backend:
-  name: git-gateway
+  name: github
+  repo: yassinred1119/academy-droit # اسم المستودع الخاص بك
   branch: main
 media_folder: "assets/images" # المجلد الذي ستُحفظ فيه الصور
 public_folder: "/assets/images" # الرابط العام للصور
