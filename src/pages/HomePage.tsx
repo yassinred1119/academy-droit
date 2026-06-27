@@ -1,305 +1,386 @@
-import { useState } from 'react';
-import { Link } from '../router';
-import {
-  Search, ChevronDown, User, UserPlus, BookOpen, FileText, AlignLeft,
-  Newspaper, Video, PenTool, Scale, GraduationCap, Bot, Shield,
-  Clock, Calendar, ArrowLeft, HelpCircle, BookMarked, Crown, LayoutGrid,
+react
+import { useState, useEffect } from 'react';
+import { 
+  BookOpen, 
+  FileText, 
+  Video, 
+  FolderOpen, 
+  Search, 
+  ArrowLeft, 
+  Award, 
+  ChevronLeft, 
+  Clock, 
+  User, 
+  TrendingUp, 
+  Sparkles 
 } from 'lucide-react';
-
-// ─── DATA ────────────────────────────────────────────────────────────────────
-
-const categoryChips = ['القانون المدني', 'القانون الجنائي', 'المسطرة الجنائية', 'قانون الشغل'];
-
-const quickTools = [
-  { icon: GraduationCap, label: 'الأكاديمية', sub: 'دورات واختبارات', to: '/academy' },
-  { icon: BookOpen, label: 'مكتبة القوانين', sub: 'جميع القوانين المغربية', to: '/library' },
-  { icon: FileText, label: 'المقالات', sub: 'مقالات قانونية موثوقة', to: '/articles' },
-  { icon: AlignLeft, label: 'الملخصات', sub: 'ملخصات شاملة', to: '/summaries' },
-  { icon: Bot, label: 'المساعد القانوني', sub: 'ذكاء اصطناعي قانوني', to: '/assistant' },
-  { icon: Video, label: 'الندوات', sub: 'ندوات ومحاضرات', to: '/seminars' },
-  { icon: Newspaper, label: 'الأخبار', sub: 'آخر أخبار القانون', to: '/news' },
-  { icon: PenTool, label: 'قوالب الكتابة', sub: 'مقالات وبحوث جاهزة', to: '/writing' },
-];
-
-const articles = [
-  { title: 'شرح الفصل 378 من القانون الجنائي المغربي', date: '24 ماي 2024', image: 'https://images.pexels.com/photos/5669619/pexels-photo-5669619.jpeg?auto=compress&cs=tinysrgb&w=200&h=130&fit=crop' },
-  { title: 'التمييز بين المسؤولية العقدية والمسؤولية التقصيرية', date: '22 ماي 2024', image: 'https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg?auto=compress&cs=tinysrgb&w=200&h=130&fit=crop' },
-  { title: 'بطلان عقد الزواج في القانون المغربي', date: '20 ماي 2024', image: 'https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&w=200&h=130&fit=crop' },
-];
-
-const news = [
-  { title: 'صدور قانون رقم 02.23 المتعلق بالمسطرة المدنية', date: '25 ماي 2024', image: 'https://images.pexels.com/photos/5668853/pexels-photo-5668853.jpeg?auto=compress&cs=tinysrgb&w=200&h=130&fit=crop' },
-  { title: 'المجلس الأعلى يصدر قرارات جديدة حول الاجتهاد القضائي', date: '23 ماي 2024', image: 'https://images.pexels.com/photos/1575937/pexels-photo-1575937.jpeg?auto=compress&cs=tinysrgb&w=200&h=130&fit=crop' },
-  { title: 'تعديل بعض مقتضيات قانون الشغل المغربي', date: '21 ماي 2024', image: 'https://images.pexels.com/photos/3771097/pexels-photo-3771097.jpeg?auto=compress&cs=tinysrgb&w=200&h=130&fit=crop' },
-];
-
-const seminars = [
-  { title: 'الذكاء الاصطناعي والقانون', speaker: 'د. محمد الكتاني', day: '28', month: 'ماي', time: '18:00 - 20:00', color: 'bg-navy-800' },
-  { title: 'قراءة في مستجدات القانون الجنائي', speaker: 'د. فاطمة الزهراء', day: '05', month: 'يونيو', time: '18:00 - 20:00', color: 'bg-gold-600' },
-  { title: 'حماية المعطيات الشخصية في القانون المغربي', speaker: 'د. يوسف السلاوي', day: '12', month: 'يونيو', time: '18:00 - 20:00', color: 'bg-navy-700' },
-];
-
-const sideQuickLinks = [
-  { icon: Search, label: 'البحث في القوانين', to: '/library' },
-  { icon: Scale, label: 'البحث في الاجتهادات', to: '/library' },
-  { icon: FileText, label: 'نماذج ومذكرات قانونية', to: '/writing' },
-  { icon: HelpCircle, label: 'الأسئلة الشائعة', to: '/community' },
-  { icon: BookMarked, label: 'المصطلحات القانونية', to: '/library' },
-  { icon: Calendar, label: 'التقويم القانوني', to: '/seminars' },
-];
-
-const stats = [
-  { icon: FileText, value: '+5000', label: 'مقال قانوني' },
-  { icon: AlignLeft, value: '+2000', label: 'PDF ملخص' },
-  { icon: GraduationCap, value: '+150', label: 'دورة تدريبية' },
-  { icon: User, value: '+100K', label: 'طالب ومستخدم' },
-  { icon: UserPlus, value: '+20', label: 'أساتذة ومراجعون' },
-  { icon: Shield, value: '+10', label: 'سنوات من الخبرة' },
-];
-
-// ─── HERO ─────────────────────────────────────────────────────────────────────
-
-function Hero() {
-  const [query, setQuery] = useState('');
-
-  return (
-    <section
-      className="relative min-h-[300px] flex items-center overflow-hidden"
-      style={{ background: 'linear-gradient(135deg, #0d1b3e 0%, #1a2d5a 50%, #0d1b3e 100%)' }}
-    >
-      <div
-        className="absolute inset-0 opacity-20"
-        style={{ backgroundImage: `url('https://images.pexels.com/photos/1181248/pexels-photo-1181248.jpeg?auto=compress&cs=tinysrgb&w=1200')`, backgroundSize: 'cover', backgroundPosition: 'center' }}
-      />
-      <div className="relative z-10 w-full px-6 py-12 text-center text-white">
-        <h1 className="text-3xl lg:text-4xl font-extrabold mb-3 leading-snug">منصة متكاملة للطالب والباحث القانوني</h1>
-        <p className="text-navy-200 text-base mb-8">كل ما تحتاجه في دراستك وفهمك للقانون المغربي في مكان واحد</p>
-
-        <div className="max-w-2xl mx-auto flex items-stretch bg-white rounded-xl shadow-xl overflow-hidden mb-6">
-          <button className="flex items-center gap-2 px-4 border-l border-gray-200 text-gray-600 text-sm font-medium whitespace-nowrap hover:bg-gray-50 transition-colors">
-            جميع الأقسام <ChevronDown className="w-4 h-4" />
-          </button>
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="ابحث عن مقال، قانون، مادة قانونية..."
-            className="flex-1 px-4 py-3.5 text-gray-800 placeholder-gray-400 text-sm outline-none"
-            dir="rtl"
-          />
-          <button className="flex items-center gap-2 px-6 bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold text-sm transition-colors">
-            <Search className="w-4 h-4" /> بحث
-          </button>
-        </div>
-
-        <div className="flex items-center justify-center flex-wrap gap-2">
-          {categoryChips.map((chip) => (
-            <button key={chip} className="px-4 py-1.5 rounded-full border border-white/40 text-white/90 text-xs font-medium hover:bg-white/10 hover:border-white/70 transition-colors">
-              {chip}
-            </button>
-          ))}
-          <Link to="/academy" className="px-4 py-1.5 rounded-full bg-gold-500 text-navy-900 text-xs font-bold hover:bg-gold-400 transition-colors flex items-center gap-1.5">
-            <LayoutGrid className="w-3 h-3" /> استكشف الأقسام
-          </Link>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── QUICK TOOLS ──────────────────────────────────────────────────────────────
-
-function QuickToolsGrid() {
-  return (
-    <section className="bg-white border-b border-gray-100 shadow-sm">
-      <div className="grid grid-cols-4 lg:grid-cols-8 divide-x divide-x-reverse divide-gray-100">
-        {quickTools.map((tool) => (
-          <Link key={tool.label} to={tool.to} className="flex flex-col items-center gap-2 px-3 py-5 hover:bg-gold-50 group transition-colors">
-            <div className="w-12 h-12 rounded-xl bg-navy-50 group-hover:bg-gold-100 flex items-center justify-center transition-colors">
-              <tool.icon className="w-6 h-6 text-navy-700 group-hover:text-gold-600 transition-colors" />
-            </div>
-            <div className="text-center">
-              <div className="text-xs font-bold text-navy-800">{tool.label}</div>
-              <div className="text-[10px] text-gray-400 mt-0.5 hidden sm:block">{tool.sub}</div>
-            </div>
-          </Link>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-// ─── SIDEBAR ──────────────────────────────────────────────────────────────────
-
-function Sidebar() {
-  return (
-    <div className="flex flex-col gap-4">
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
-        <h3 className="font-bold text-navy-900 text-base mb-1">مرحباً بك في أكاديمية القانون</h3>
-        <p className="text-gray-500 text-xs mb-4 leading-relaxed">سجل الدخول للاستفادة من جميع الميزات والخدمات</p>
-        <Link to="/profile" className="w-full flex items-center justify-center gap-2 bg-navy-900 hover:bg-navy-800 text-white py-2.5 rounded-lg text-sm font-medium transition-colors mb-2">
-          <User className="w-4 h-4" /> تسجيل الدخول
-        </Link>
-        <Link to="/profile" className="w-full flex items-center justify-center gap-2 border border-navy-900 text-navy-900 hover:bg-navy-50 py-2.5 rounded-lg text-sm font-medium transition-colors">
-          <UserPlus className="w-4 h-4" /> إنشاء حساب جديد
-        </Link>
-      </div>
-
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
-        <h3 className="font-bold text-navy-900 text-base mb-4 flex items-center gap-2">
-          <LayoutGrid className="w-4 h-4 text-gold-500" /> أدوات سريعة
-        </h3>
-        <ul className="space-y-1">
-          {sideQuickLinks.map((item) => (
-            <li key={item.label}>
-              <Link to={item.to} className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-50 group transition-colors">
-                <item.icon className="w-4 h-4 text-gold-500 group-hover:text-gold-600" />
-                <span className="text-sm text-gray-700 group-hover:text-navy-900 font-medium">{item.label}</span>
-                <ArrowLeft className="w-3 h-3 text-gray-300 group-hover:text-gold-500 mr-auto transition-colors" />
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="bg-navy-900 rounded-xl p-5 text-white relative overflow-hidden">
-        <div className="absolute top-2 left-3 opacity-10"><Crown className="w-16 h-16" /></div>
-        <Crown className="w-8 h-8 text-gold-400 mb-3" />
-        <h3 className="font-bold text-base mb-1">اشترك الآن</h3>
-        <p className="text-navy-300 text-xs mb-4 leading-relaxed">واحصل على محتوى حصري ومزايا لا محدودة</p>
-        <button className="w-full bg-gold-500 hover:bg-gold-400 text-navy-900 py-2.5 rounded-lg text-sm font-bold transition-colors">
-          اكتشف الباقات
-        </button>
-      </div>
-    </div>
-  );
-}
-
-// ─── HOME PAGE ────────────────────────────────────────────────────────────────
+import { Link } from '../router';
 
 export default function HomePage() {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [recentArticles, setRecentArticles] = useState([]);
+  const [recentSeminars, setRecentSeminars] = useState([]);
+  const [recentLaws, setRecentLaws] = useState([]);
+
+  // جلب البيانات الأساسية لعرضها بشكل ديناميكي ومباشر في واجهة المستخدم
+  useEffect(() => {
+    // جلب المقالات
+    fetch('/data/articles.json')
+      .then(res => res.json())
+      .then(data => {
+        const list = data.articles || data;
+        if (Array.isArray(list)) setRecentArticles(list.slice(0, 3));
+      })
+      .catch(() => {});
+
+    // جلب الندوات
+    fetch('/data/seminars.json')
+      .then(res => res.json())
+      .then(data => {
+        const list = data.seminars || data;
+        if (Array.isArray(list)) setRecentSeminars(list.slice(0, 2));
+      })
+      .catch(() => {});
+
+    // جلب نصوص مكتبة القوانين
+    fetch('/data/library.json')
+      .then(res => res.json())
+      .then(data => {
+        const list = data.library || data;
+        if (Array.isArray(list)) setRecentLaws(list.slice(0, 3));
+      })
+      .catch(() => {});
+  }, []);
+
   return (
-    <>
-      <div className="max-w-[1400px] mx-auto flex gap-4 px-4 pt-4 items-start">
-        <main className="flex-1 min-w-0 flex flex-col gap-4">
-          <Hero />
-          <QuickToolsGrid />
+    <div className="w-full min-h-screen text-right" dir="rtl">
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Articles */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="font-bold text-navy-900 text-base">أحدث المقالات</h2>
-                <Link to="/articles" className="text-gold-600 text-xs font-medium hover:text-gold-500 flex items-center gap-1">
-                  عرض الكل <ArrowLeft className="w-3 h-3" />
-                </Link>
-              </div>
-              <ul className="space-y-4 flex-1">
-                {articles.map((a) => (
-                  <li key={a.title} className="flex gap-3 group">
-                    <img src={a.image} alt={a.title} className="w-20 h-14 object-cover rounded-lg shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <Link to="/articles" className="text-sm font-semibold text-navy-800 group-hover:text-gold-600 line-clamp-2 leading-snug transition-colors">
-                        {a.title}
-                      </Link>
-                      <p className="text-xs text-gray-400 mt-1">{a.date}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-              <Link to="/articles" className="mt-4 block text-center text-sm text-navy-800 border border-navy-200 hover:bg-navy-50 py-2.5 rounded-lg transition-colors font-medium">
-                جميع المقالات
-              </Link>
-            </div>
-
-            {/* News */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="font-bold text-navy-900 text-base">آخر الأخبار القانونية</h2>
-                <Link to="/news" className="text-gold-600 text-xs font-medium hover:text-gold-500 flex items-center gap-1">
-                  عرض الكل <ArrowLeft className="w-3 h-3" />
-                </Link>
-              </div>
-              <ul className="space-y-4 flex-1">
-                {news.map((n) => (
-                  <li key={n.title} className="flex gap-3 group">
-                    <img src={n.image} alt={n.title} className="w-20 h-14 object-cover rounded-lg shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <Link to="/news" className="text-sm font-semibold text-navy-800 group-hover:text-gold-600 line-clamp-2 leading-snug transition-colors">
-                        {n.title}
-                      </Link>
-                      <p className="text-xs text-gray-400 mt-1">{n.date}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-              <Link to="/news" className="mt-4 block text-center text-sm text-navy-800 border border-navy-200 hover:bg-navy-50 py-2.5 rounded-lg transition-colors font-medium">
-                جميع الأخبار
-              </Link>
-            </div>
-
-            {/* Seminars */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="font-bold text-navy-900 text-base">الندوات القادمة</h2>
-                <Link to="/seminars" className="text-gold-600 text-xs font-medium hover:text-gold-500 flex items-center gap-1">
-                  عرض الكل <ArrowLeft className="w-3 h-3" />
-                </Link>
-              </div>
-              <ul className="space-y-3 flex-1">
-                {seminars.map((s) => (
-                  <li key={s.title} className="flex gap-3 group">
-                    <div className={`${s.color} text-white rounded-xl px-3 py-2 flex flex-col items-center justify-center shrink-0 min-w-[52px]`}>
-                      <span className="text-lg font-extrabold leading-none">{s.day}</span>
-                      <span className="text-[10px] opacity-80 mt-0.5">{s.month}</span>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <Link to="/seminars" className="text-sm font-semibold text-navy-800 group-hover:text-gold-600 line-clamp-2 leading-snug transition-colors">
-                        {s.title}
-                      </Link>
-                      <div className="flex items-center gap-2 mt-1">
-                        <div className="w-4 h-4 rounded-full bg-gray-200 flex items-center justify-center">
-                          <User className="w-2.5 h-2.5 text-gray-500" />
-                        </div>
-                        <span className="text-xs text-gray-500">{s.speaker}</span>
-                      </div>
-                      <div className="flex items-center gap-1 mt-0.5">
-                        <Clock className="w-3 h-3 text-gray-400" />
-                        <span className="text-[11px] text-gray-400">{s.time}</span>
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-              <Link to="/seminars" className="mt-4 block text-center text-sm text-navy-800 border border-navy-200 hover:bg-navy-50 py-2.5 rounded-lg transition-colors font-medium">
-                جميع الندوات
-              </Link>
-            </div>
+      {/* ==========================================================================
+         📱 1. نسخة الهاتف المحمول (تظهر فقط في الهاتف وتختفي تماماً في الحاسوب)
+         ========================================================================== */}
+      <div className="block md:hidden px-4 py-5 bg-white dark:bg-[#09090b] transition-colors duration-200 min-h-screen">
+        
+        {/* البانر الترحيبي الذكي للجوال (شكل بطاقة تطبيق ذكي) */}
+        <div className="relative overflow-hidden bg-gradient-to-br from-[#0f172a] to-[#090d16] text-white p-5 rounded-3xl shadow-md mb-6">
+          <div className="absolute top-0 left-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl"></div>
+          <div className="relative z-10">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 text-[#facc15] text-[10px] font-bold mb-3 border border-amber-500/20">
+              <Sparkles className="w-3 h-3" /> منصتك القانونية الأولى بالمغرب
+            </span>
+            <h1 className="text-xl font-black leading-tight text-white mb-2">أكاديمية القانون المغربي</h1>
+            <p className="text-slate-300 text-xs font-medium leading-relaxed max-w-[90%]">
+              دليلك الشامل للدراسة القانونية، ملخصات المواد، القوانين الرسمية والندوات التفاعلية.
+            </p>
           </div>
-        </main>
+        </div>
 
-        {/* Sidebar */}
-        <aside className="hidden lg:block sticky top-20 self-start w-72 shrink-0">
-          <Sidebar />
-        </aside>
-      </div>
+        {/* شريط البحث المطور المريح لليد */}
+        <div className="relative mb-6">
+          <input
+            type="text"
+            placeholder="ابحث عن مادة، قانون، أو مقال قانوني..."
+            className="w-full pr-11 pl-4 py-3 bg-slate-50 dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 rounded-2xl text-xs outline-none shadow-sm focus:border-amber-500 dark:focus:border-amber-500 transition-all text-right text-slate-900 dark:text-slate-100"
+          />
+          <Search className="absolute right-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-400" />
+        </div>
 
-      {/* Stats */}
-      <div className="max-w-[1400px] mx-auto px-4 mt-4">
-        <section className="bg-white border-t border-gray-100 py-8 rounded-xl">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 px-4">
-            {stats.map((stat) => (
-              <div key={stat.label} className="flex flex-col items-center text-center gap-2">
-                <div className="w-10 h-10 rounded-xl bg-navy-50 flex items-center justify-center">
-                  <stat.icon className="w-5 h-5 text-navy-700" />
+        {/* قسم الأدوات السريعة الدائرية الفخمة (Quick Circle Tools) */}
+        <div className="mb-6">
+          <h2 className="font-extrabold text-[#0f172a] dark:text-slate-100 text-sm mb-4 flex items-center gap-1.5">
+            <span className="w-1.5 h-4 bg-[#f59e0b] rounded-full"></span> أدوات سريعة
+          </h2>
+          <div className="grid grid-cols-4 gap-3 text-center">
+            
+            <Link to="/library" className="flex flex-col items-center group">
+              <div className="w-13 h-13 rounded-2xl bg-amber-50 dark:bg-amber-950/30 flex items-center justify-center text-[#f59e0b] shadow-sm mb-2 transition-transform active:scale-95">
+                <FolderOpen className="w-6 h-6" />
+              </div>
+              <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300">مكتبة القوانين</span>
+            </Link>
+
+            <Link to="/summaries" className="flex flex-col items-center group">
+              <div className="w-13 h-13 rounded-2xl bg-indigo-50 dark:bg-indigo-950/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 shadow-sm mb-2 transition-transform active:scale-95">
+                <BookOpen className="w-6 h-6" />
+              </div>
+              <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300">ملخصات المواد</span>
+            </Link>
+
+            <Link to="/articles" className="flex flex-col items-center group">
+              <div className="w-13 h-13 rounded-2xl bg-emerald-50 dark:bg-emerald-950/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shadow-sm mb-2 transition-transform active:scale-95">
+                <FileText className="w-6 h-6" />
+              </div>
+              <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300">البحوث والمقالات</span>
+            </Link>
+
+            <Link to="/seminars" className="flex flex-col items-center group">
+              <div className="w-13 h-13 rounded-2xl bg-pink-50 dark:bg-pink-950/30 flex items-center justify-center text-pink-600 dark:text-pink-400 shadow-sm mb-2 transition-transform active:scale-95">
+                <Video className="w-6 h-6" />
+              </div>
+              <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300">الندوات والمؤتمرات</span>
+            </Link>
+
+          </div>
+        </div>
+
+        {/* قسم الندوات القادمة في الجوال */}
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-extrabold text-[#0f172a] dark:text-slate-100 text-sm flex items-center gap-1.5">
+              <span className="w-1.5 h-4 bg-[#f59e0b] rounded-full"></span> الندوات والمؤتمرات القادمة
+            </h2>
+            <Link to="/seminars" className="text-xs font-bold text-[#f59e0b] flex items-center gap-0.5">
+              الكل <ChevronLeft className="w-4.5 h-4.5" />
+            </Link>
+          </div>
+          <div className="flex flex-col gap-3">
+            {recentSeminars.map((seminar, idx) => (
+              <div key={idx} className="bg-slate-50 dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800/80 p-4 rounded-2xl flex items-center gap-4">
+                {/* مربع التاريخ الأنيق المصغر */}
+                <div className="bg-[#0f172a] dark:bg-zinc-800 text-white rounded-xl w-12 h-14 flex flex-col items-center justify-center shrink-0">
+                  <span className="text-base font-black leading-none">{seminar.day || "25"}</span>
+                  <span className="text-[9px] text-slate-300 mt-0.5">{seminar.monthYear?.split(' ')[0] || "يونيو"}</span>
                 </div>
-                <div className="font-extrabold text-xl text-navy-900">{stat.value}</div>
-                <div className="text-xs text-gray-500">{stat.label}</div>
+                {/* التفاصيل النصية */}
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-extrabold text-slate-900 dark:text-slate-100 text-xs mb-1 truncate">{seminar.title}</h3>
+                  <div className="flex items-center gap-2 text-[10px] text-slate-400">
+                    <span>{seminar.speaker && `أ. ${seminar.speaker}`}</span>
+                    <span>•</span>
+                    <span className="px-1.5 py-0.2 rounded bg-emerald-100/10 text-emerald-500 font-bold">{seminar.type || "عبر الإنترنت"}</span>
+                  </div>
+                </div>
+                {/* زر التنقل للفورم */}
+                <a 
+                  href={seminar.formLink || "#"} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="w-8 h-8 rounded-full bg-slate-200 dark:bg-zinc-800 flex items-center justify-center text-[#0f172a] dark:text-white shrink-0"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </a>
               </div>
             ))}
           </div>
-        </section>
+        </div>
+
+        {/* قسم أحدث المقالات في الجوال */}
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-extrabold text-[#0f172a] dark:text-slate-100 text-sm flex items-center gap-1.5">
+              <span className="w-1.5 h-4 bg-[#f59e0b] rounded-full"></span> أحدث البحوث والمقالات القانونية
+            </h2>
+            <Link to="/articles" className="text-xs font-bold text-[#f59e0b] flex items-center gap-0.5">
+              الكل <ChevronLeft className="w-4.5 h-4.5" />
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 gap-4">
+            {recentArticles.map((article, idx) => (
+              <div key={idx} className="bg-slate-50 dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800/80 rounded-2xl overflow-hidden flex flex-col">
+                <img src={article.image} alt={article.title} className="w-full h-32 object-cover shrink-0" />
+                <div className="p-4 flex-1">
+                  <span className="inline-block bg-amber-500/10 text-[#f59e0b] text-[9px] font-bold px-2 py-0.5 rounded-md mb-2">
+                    {article.category}
+                  </span>
+                  <h3 className="font-extrabold text-slate-900 dark:text-slate-100 text-xs mb-2 leading-relaxed">
+                    {article.title}
+                  </h3>
+                  <div className="flex items-center justify-between text-[10px] text-slate-400 mt-2 border-t border-slate-100 dark:border-zinc-800 pt-2">
+                    <span className="flex items-center gap-1"><User className="w-3.5 h-3.5" /> {article.author}</span>
+                    <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> {article.date}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* تذييل الصفحة للجوال */}
+        <div className="text-center py-6 border-t border-slate-100 dark:border-zinc-800 mt-8">
+          <div className="font-bold text-slate-400 text-[10px]">جميع الحقوق محفوظة © أكاديمية القانون المغربي ٢٠٢٦</div>
+        </div>
+
       </div>
-    </>
+
+
+      {/* ==========================================================================
+         💻 2. نسخة الحاسوب الكاملة (تظهر فقط في الحاسوب وتختفي تماماً في الهاتف)
+         ========================================================================== */}
+      <div className="hidden md:block max-w-[1400px] mx-auto px-6 py-8 transition-all duration-300">
+        
+        {/* البانر الترحيبي العريض المذهل لسطح المكتب */}
+        <div className="bg-gradient-to-r from-[#0f172a] via-[#0f172a] to-[#0a0f1d] text-white p-10 rounded-3xl shadow-xl flex items-center justify-between gap-10 mb-10 relative overflow-hidden">
+          <div className="absolute right-1/2 bottom-0 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl"></div>
+          
+          <div className="flex-1 relative z-10">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 text-[#facc15] text-xs font-bold mb-4 border border-amber-500/20">
+              <Award className="w-4 h-4" /> المنصة الأكاديمية الرسمية المتكاملة بالمملكة المغربية
+            </span>
+            <h1 className="text-3xl lg:text-4xl font-black text-white leading-tight mb-3">أكاديمية القانون المغربي</h1>
+            <p className="text-slate-300 text-sm font-medium max-w-2xl mb-6 leading-relaxed">
+              مرجعك العلمي الدائم لدراسة وفهم فروع القانون العام والخاص بالمغرب. ملخصات المواد الجامعية المنقحة، مكتبة نصوص وظهائر محدثة باستمرار، وندوات أكاديمية تفاعلية.
+            </p>
+            <div className="flex items-center gap-3">
+              <Link to="/summaries" className="px-6 py-3 bg-[#f59e0b] hover:bg-[#d97706] text-white text-xs font-bold rounded-xl transition-all shadow-md">
+                ابدأ تصفح الملخصات
+              </Link>
+              <Link to="/library" className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white text-xs font-bold rounded-xl border border-white/10 transition-all">
+                مكتبة القوانين المغربية
+              </Link>
+            </div>
+          </div>
+
+          <div className="w-72 h-44 bg-white/5 border border-white/10 rounded-2xl shrink-0 backdrop-blur-sm p-5 flex flex-col justify-between">
+            <div className="text-right">
+              <div className="text-xs text-slate-400 font-bold mb-1">إحصائيات الأكاديمية</div>
+              <div className="text-3xl font-black text-[#facc15]">+ ١٥٠</div>
+              <div className="text-xs text-slate-300 mt-1">قانون وظهير شريف متاح للتحميل المجاني</div>
+            </div>
+            <div className="flex items-center justify-between text-[11px] text-slate-400 border-t border-white/10 pt-2">
+              <span>تحديث يومي مستمر</span>
+              <span>⚡</span>
+            </div>
+          </div>
+        </div>
+
+        {/* البحث والتصفية المتقدم لسطح المكتب */}
+        <div className="bg-white dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 p-4 rounded-2xl shadow-sm mb-8 flex items-center justify-between gap-4">
+          <div className="relative flex-1">
+            <input
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="ابحث عن البحوث، والملخصات، ومكتبة القوانين المغربية..."
+              className="w-full pr-11 pl-4 py-3 border border-slate-100 dark:border-zinc-800 rounded-xl text-xs outline-none bg-slate-50 dark:bg-zinc-950 text-right text-slate-900 dark:text-slate-100"
+            />
+            <Search className="absolute right-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-400" />
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <span className="text-xs text-slate-400 font-bold ml-1">تصفح سريع:</span>
+            <Link to="/summaries" className="px-4 py-2 bg-slate-100 dark:bg-zinc-800 hover:bg-[#0f172a] hover:text-white dark:hover:bg-[#0f172a] text-slate-700 dark:text-slate-300 rounded-lg text-xs font-bold transition-all">الملخصات القانونية</Link>
+            <Link to="/library" className="px-4 py-2 bg-slate-100 dark:bg-zinc-800 hover:bg-[#0f172a] hover:text-white dark:hover:bg-[#0f172a] text-slate-700 dark:text-slate-300 rounded-lg text-xs font-bold transition-all">مكتبة النصوص والظهائر</Link>
+          </div>
+        </div>
+
+        {/* تنظيم الشبكة: المقالات + الندوات والمكتبة جانباً */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          
+          {/* العمود الرئيسي اليمين: أحدث المقالات والبحوث */}
+          <div className="lg:col-span-2 flex flex-col gap-6">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-zinc-850 pb-3">
+              <h2 className="font-extrabold text-[#0f172a] dark:text-slate-100 text-lg flex items-center gap-2">
+                <span className="w-2 h-5 bg-[#f59e0b] rounded-full"></span> المقالات والأبحاث القانونية الجديدة
+              </h2>
+              <Link to="/articles" className="text-xs font-bold text-[#f59e0b] flex items-center gap-1 hover:underline">
+                جميع المقالات <ArrowLeft className="w-4 h-4" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {recentArticles.map((article, idx) => (
+                <div key={idx} className="bg-white dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between">
+                  <div className="relative h-44 overflow-hidden">
+                    <img src={article.image} alt={article.title} className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-300" />
+                    <span className="absolute top-3 right-3 bg-[#0f172a] text-white text-[10px] font-bold px-3 py-1 rounded-lg">
+                      {article.category}
+                    </span>
+                  </div>
+                  <div className="p-5 flex-1 flex flex-col justify-between">
+                    <div>
+                      <h3 className="font-extrabold text-slate-900 dark:text-slate-100 text-sm mb-2 leading-relaxed group-hover:text-[#f59e0b] transition-colors">
+                        {article.title}
+                      </h3>
+                      <p className="text-slate-400 dark:text-slate-400 text-xs line-clamp-2 leading-relaxed mb-4">
+                        مقال قانوني مراجع وشامل يحتوي على دراسات وتحليلات دقيقة ومتنوعة.
+                      </p>
+                    </div>
+                    <div className="flex items-center justify-between text-xs text-slate-400 border-t border-slate-50 dark:border-zinc-800/60 pt-3">
+                      <span className="flex items-center gap-1"><User className="w-4 h-4 text-slate-300" /> {article.author}</span>
+                      <span className="flex items-center gap-1"><Clock className="w-4 h-4 text-slate-300" /> {article.date}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* العمود اليسار الجانبي: الندوات ومكتبة القوانين */}
+          <div className="flex flex-col gap-8">
+            
+            {/* الندوات والمؤتمرات */}
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center justify-between border-b border-slate-100 dark:border-zinc-850 pb-3">
+                <h2 className="font-extrabold text-[#0f172a] dark:text-slate-100 text-base flex items-center gap-2">
+                  <span className="w-2 h-5 bg-[#f59e0b] rounded-full"></span> ندوات ومؤتمرات
+                </h2>
+                <Link to="/seminars" className="text-xs font-bold text-[#f59e0b] flex items-center gap-1 hover:underline">
+                  المزيد
+                </Link>
+              </div>
+
+              <div className="flex flex-col gap-4">
+                {recentSeminars.map((seminar, idx) => (
+                  <div key={idx} className="bg-white dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 p-4 rounded-2xl shadow-sm flex items-center gap-4 hover:shadow-md transition-shadow">
+                    <div className="bg-[#0f172a] dark:bg-zinc-800 text-white rounded-2xl w-14 h-16 flex flex-col items-center justify-center shrink-0">
+                      <span className="text-xl font-black leading-none">{seminar.day || "15"}</span>
+                      <span className="text-[10px] text-slate-300 mt-1">{seminar.monthYear?.split(' ')[0] || "يوليو"}</span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-extrabold text-slate-900 dark:text-slate-100 text-xs mb-1.5 truncate">{seminar.title}</h3>
+                      <div className="flex items-center gap-2 text-[10px] text-slate-400">
+                        <span>{seminar.speaker && `أ. ${seminar.speaker}`}</span>
+                        <span>•</span>
+                        <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-500 font-extrabold">{seminar.type || "عبر الإنترنت"}</span>
+                      </div>
+                    </div>
+                    <a 
+                      href={seminar.formLink || "#"} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="w-8 h-8 rounded-xl bg-slate-50 dark:bg-zinc-800 border border-slate-100 dark:border-zinc-700 flex items-center justify-center text-slate-600 dark:text-white hover:bg-slate-100"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* مكتبة القوانين المغربية */}
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center justify-between border-b border-slate-100 dark:border-zinc-850 pb-3">
+                <h2 className="font-extrabold text-[#0f172a] dark:text-slate-100 text-base flex items-center gap-2">
+                  <span className="w-2 h-5 bg-[#f59e0b] rounded-full"></span> مستندات قانونية حديثة
+                </h2>
+                <Link to="/library" className="text-xs font-bold text-[#f59e0b] flex items-center gap-1 hover:underline">
+                  المكتبة
+                </Link>
+              </div>
+
+              <div className="flex flex-col gap-3">
+                {recentLaws.map((law, idx) => (
+                  <div key={idx} className="bg-white dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 p-4 rounded-xl flex items-center justify-between gap-3 shadow-sm">
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-extrabold text-slate-900 dark:text-slate-100 text-xs truncate mb-1">{law.title}</h3>
+                      <p className="text-[10px] text-slate-400 font-medium truncate">{law.subtitle}</p>
+                    </div>
+                    <a 
+                      href={law.fileUrl || "#"} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="px-4 py-1.5 bg-[#0f172a] dark:bg-zinc-800 hover:bg-[#1e293b] text-white text-[10px] font-bold rounded-lg transition-colors shrink-0"
+                    >
+                      عرض المستند
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
   );
 }
