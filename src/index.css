@@ -9,31 +9,67 @@
 
   html {
     direction: rtl;
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
   }
 }
 
-/* كتابة قواعد الخلفيات والألوان خارج طبقات التايلوند لتجنب أي أخطاء في الـ Build */
+/* --- نظام الألوان الديناميكي الآمن للخلفيات والنصوص الأساسية فقط --- */
 
-/* وضع النهار (الضوء): خلفية بيضاء ناصعة مع خط كحلي داكن ملكي */
+/* وضع النهار (الضوء): خلفية بيضاء نقية مع خط داكن مريح دون فرض الألوان على المكونات */
 body {
-  background-color: #ffffff !important;
-  color: #0f172a !important;
+  background-color: #ffffff;
+  color: #0f172a;
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* وضع الليل (الظلام): خلفية سوداء نيلية عميقة جداً مع خطوط بيضاء ناصعة */
+/* وضع الليل (الظلام): خلفية سوداء ليلية فخمة ومريحة للعين */
 html.dark body {
-  background-color: #020617 !important;
-  color: #ffffff !important;
+  background-color: #09090b;
+  color: #f8fafc;
 }
 
-/* كلاسات مخصصة للألوان الذهبية الملكية للأكاديمية */
-.text-gold {
-  color: #d97706 !important;
+/* --- حماية وتعريف الألوان الملكية للأكاديمية لتعمل بقوة في كلتا الحالتين --- */
+
+/* كلاسات اللون الكحلي الملكي (Navy Blue) */
+.bg-navy-900 {
+  background-color: #0f172a !important;
 }
 
-.bg-gold {
-  background-color: #d97706 !important;
+.text-navy-900 {
+  color: #0f172a !important;
+}
+
+.text-navy-300 {
+  color: #94a3b8 !important;
+}
+
+.text-navy-200 {
+  color: #cbd5e1 !important;
+}
+
+/* كلاسات اللون الذهبي الفاخر (Gold) */
+.bg-gold-500 {
+  background-color: #eab308 !important; /* لون ذهبي دافئ مشرق */
+}
+
+.bg-gold-400 {
+  background-color: #facc15 !important;
+}
+
+.hover\:bg-gold-400:hover {
+  background-color: #facc15 !important;
+}
+
+.text-gold-400 {
+  color: #facc15 !important;
+}
+
+.text-gold-500 {
+  color: #eab308 !important;
 }
 
 @layer utilities {
