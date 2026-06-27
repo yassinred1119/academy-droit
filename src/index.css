@@ -8,35 +8,20 @@
   }
   html {
     direction: rtl;
-    color-scheme: light;
-  }
-  html.dark {
-    color-scheme: dark;
   }
 }
 
 body {
-  background-color: #ffffff;
+  background-color: #f8fafc;
   color: #0f172a;
-  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-html.dark body {
-  background-color: #09090b;
-  color: #f8fafc;
-}
+/* الألوان الملكية الخاصة بأكاديمية القانون */
+.bg-navy-royal { background-color: #0f172a !important; }
+.text-navy-royal { color: #0f172a !important; }
+.bg-gold-royal { background-color: #eab308 !important; }
+.text-gold-royal { color: #eab308 !important; }
 
-/* الألوان الملكية المخصصة للأكاديمية */
-.bg-navy-900 { background-color: #0f172a !important; }
-.text-navy-900 { color: #0f172a !important; }
-.bg-navy-950 { background-color: #090d16 !important; }
-.text-navy-950 { color: #090d16 !important; }
-.bg-gold-500 { background-color: #eab308 !important; }
-.bg-gold-400 { background-color: #facc15 !important; }
-.text-gold-400 { color: #facc15 !important; }
-.text-gold-500 { color: #eab308 !important; }
-
-@layer utilities {
-  .scrollbar-hide::-webkit-scrollbar { display: none; }
-  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-}
+/* تحسينات القوائم الجانبية وسلاسة التصفح */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
