@@ -9,34 +9,31 @@
 
   html {
     direction: rtl;
-    color-scheme: light;
   }
+}
 
-  html.dark {
-    color-scheme: dark;
-  }
+/* كتابة قواعد الخلفيات والألوان خارج طبقات التايلوند لتجنب أي أخطاء في الـ Build */
 
-  /* وضع النهار (الضوء): خلفية بيضاء ناصعة مع خط كحلي داكن ملكي وتفاصيل ذهبية دافئة */
-  body {
-    background-color: #ffffff; /* أبيض ناصع تماماً بناءً على طلبك */
-    color: #0f172a; /* اللون الأزرق الكحلي الداكن جداً الفخم بدلاً من الأسود العادي */
-    transition: background-color 0.25s ease, color 0.25s ease;
-  }
+/* وضع النهار (الضوء): خلفية بيضاء ناصعة مع خط كحلي داكن ملكي */
+body {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
 
-  /* وضع الليل (الظلام): خلفية سوداء نيلية عميقة جداً مع خطوط بيضاء ناصعة وتفاصيل ذهبية متوهجة */
-  .dark body {
-    background-color: #020617; /* أسود أزرق نيلي عميق جداً وقريب من السواد التام لراحة العين */
-    color: #ffffff; /* أبيض ناصع تماماً */
-  }
+/* وضع الليل (الظلام): خلفية سوداء نيلية عميقة جداً مع خطوط بيضاء ناصعة */
+html.dark body {
+  background-color: #020617 !important;
+  color: #ffffff !important;
+}
 
-  /* تنسيق مخصص للتأكيد على بقاء الأزرار والروابط الذهبية متناسقة دائماً */
-  .text-gold {
-    color: #d97706; /* لون ذهبي دافئ للخطوط والمحاور */
-  }
-  
-  .bg-gold {
-    background-color: #d97706; /* خلفية ذهبية للأزرار الهامة */
-  }
+/* كلاسات مخصصة للألوان الذهبية الملكية للأكاديمية */
+.text-gold {
+  color: #d97706 !important;
+}
+
+.bg-gold {
+  background-color: #d97706 !important;
 }
 
 @layer utilities {
@@ -48,3 +45,4 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+}
