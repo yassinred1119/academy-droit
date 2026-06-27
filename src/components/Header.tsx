@@ -1,6 +1,43 @@
 import { Bell, Moon, Sun, User, UserPlus, Scale, ChevronDown } from 'lucide-react';
 import { Link, useRouter } from '../router';
+import { useState, useEffect } from 'react';
+import { Moon, Sun } from 'lucide-react'; // استيراد الأيقونات
 
+export default function Header() {
+  // معرفة هل الوضع الداكن مفعّل أم لا
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem('theme') === 'dark' || 
+      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  });
+
+  // تطبيق التغيير على وسم الـ html بكل سلاسة
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+   biographical }, [darkMode]);
+
+  return (
+    <header className="bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-slate-800 transition-colors duration-300">
+      {/* ... باقي كود الهيدر الحالي الخاص بك ... */}
+      
+      {/* زر الهلال والشمس التفاعلي بدلاً من الأيقونة الثابتة */}
+      <button 
+        onClick={() => setDarkMode(!darkMode)} 
+        className="p-2 rounded-xl bg-gray-50 dark:bg-slate-800 text-gray-500 dark:text-amber-400 hover:bg-gray-100 dark:hover:bg-slate-700 transition-all"
+        title={darkMode ? "تفعيل الوضع المضيء" : "تفعيل الوضع الداكن"}
+      >
+        {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+      </button>
+
+      {/* ... باقي كود الهيدر ... */}
+    </header>
+  );
+}
 const navLinks = [
   { label: 'الرئيسية', path: '/' },
   { label: 'الأكاديمية', path: '/academy' },
