@@ -1,60 +1,9 @@
-```css
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  * {
-    font-family: 'Tajawal', sans-serif;
-  }
-
-  html {
-    direction: rtl;
-    color-scheme: light;
-  }
-
-  html.dark {
-    color-scheme: dark;
-  }
-}
-
-/* --- ألوان خلفية الموقع الأساسية --- */
 body {
-  background-color: #ffffff !important;
-  color: #0f172a !important;
-  transition: background-color 0.25s ease, color 0.25s ease;
+  font-family: 'Tajawal', sans-serif;
+  background-color: #ffffff;
+  color: #0f172a;
 }
-
-html.dark body {
-  background-color: #09090b !important;
-  color: #f8fafc !important;
-}
-
-/* --- الألوان الملكية للأكاديمية --- */
-.bg-navy-900 {
-  background-color: #0f172a !important;
-}
-
-.text-navy-900 {
-  color: #0f172a !important;
-}
-
-.bg-gold-500 {
-  background-color: #eab308 !important;
-}
-
-.text-gold-400 {
-  color: #facc15 !important;
-}
-
-.text-gold-500 {
-  color: #eab308 !important;
-}
-
-@layer utilities {
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-```
