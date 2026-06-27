@@ -1,3 +1,4 @@
+```css
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -17,24 +18,26 @@
   }
 }
 
-/* --- نظام الألوان الديناميكي الآمن للخلفيات والنصوص الأساسية فقط --- */
+/* ==========================================================================
+   1. نظام خلفيات الموقع (الوضع المضيء والداكن)
+   ========================================================================== */
 
-/* وضع النهار (الضوء): خلفية بيضاء نقية مع خط داكن مريح دون فرض الألوان على المكونات */
 body {
-  background-color: #ffffff;
+  background-color: #ffffff; /* بيضاء ناصعة نهاراً */
   color: #0f172a;
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* وضع الليل (الظلام): خلفية سوداء ليلية فخمة ومريحة للعين */
 html.dark body {
-  background-color: #09090b;
+  background-color: #09090b; /* سوداء ليلية فخمة */
   color: #f8fafc;
 }
 
-/* --- حماية وتعريف الألوان الملكية للأكاديمية لتعمل بقوة في كلتا الحالتين --- */
+/* ==========================================================================
+   2. الألوان الملكية للأكاديمية
+   ========================================================================== */
 
-/* كلاسات اللون الكحلي الملكي (Navy Blue) */
+/* درجات الأزرق الملكي (Navy) */
 .bg-navy-900 {
   background-color: #0f172a !important;
 }
@@ -43,17 +46,17 @@ html.dark body {
   color: #0f172a !important;
 }
 
-.text-navy-300 {
-  color: #94a3b8 !important;
+.bg-navy-950 {
+  background-color: #090d16 !important;
 }
 
-.text-navy-200 {
-  color: #cbd5e1 !important;
+.text-navy-950 {
+  color: #090d16 !important;
 }
 
-/* كلاسات اللون الذهبي الفاخر (Gold) */
+/* درجات الذهبي الفخم (Gold) */
 .bg-gold-500 {
-  background-color: #eab308 !important; /* لون ذهبي دافئ مشرق */
+  background-color: #eab308 !important; /* ذهبي دافئ للأزرار */
 }
 
 .bg-gold-400 {
@@ -65,7 +68,7 @@ html.dark body {
 }
 
 .text-gold-400 {
-  color: #facc15 !important;
+  color: #facc15 !important; /* شعار الأكاديمية والنصوص */
 }
 
 .text-gold-500 {
@@ -82,39 +85,5 @@ html.dark body {
     scrollbar-width: none;
   }
 }
-export default function HomePage() {
-  return (
-    <div>
-      {/* 📱 النسخة الأولى: مخصصة للهاتف فقط */}
-      {/* (تظهر على الشاشات الصغيرة، وتختفي تماماً من شاشات الحاسوب الكبيرة md:hidden) */}
-      <div className="block md:hidden bg-slate-50 dark:bg-zinc-950 px-4 py-6">
-        {/* اذكر هنا كل الأكواد والتصميم الذي تريده أن يظهر في الهاتف فقط */}
-        <h1 className="text-xl font-bold text-center text-gold-500">
-          مرحباً بك في الأكاديمية (نسخة الهاتف)
-        </h1>
-        
-        {/* مثال: ترتيب عمودي للبطاقات يناسب شاشة الجوال */}
-        <div className="flex flex-col gap-4 mt-6">
-          <div className="bg-white dark:bg-zinc-900 p-4 rounded-xl shadow">بطاقة 1 في الهاتف</div>
-          <div className="bg-white dark:bg-zinc-900 p-4 rounded-xl shadow">بطاقة 2 في الهاتف</div>
-        </div>
-      </div>
 
-      {/* 💻 النسخة الثانية: مخصصة للحاسوب فقط */}
-      {/* (تختفي تماماً في الهاتف hidden، وتظهر فقط بدءاً من شاشات الحاسوب md:block) */}
-      <div className="hidden md:block bg-white dark:bg-navy-950 p-10">
-        {/* هنا تضع كودك الحالي والقديم المخصص للحاسوب بدون أي تغيير */}
-        <h1 className="text-3xl font-bold text-navy-900 dark:text-slate-100">
-          مرحباً بك في أكاديمية القانون المغربي (نسخة الحاسوب)
-        </h1>
-
-        {/* مثال: تصميم شبكة عريضة بجانب بعضها للحاسوب */}
-        <div className="grid grid-cols-3 gap-6 mt-8">
-          <div className="bg-slate-50 dark:bg-navy-900 p-6 rounded-xl">بطاقة 1 للحاسوب</div>
-          <div className="bg-slate-50 dark:bg-navy-900 p-6 rounded-xl">بطاقة 2 للحاسوب</div>
-          <div className="bg-slate-50 dark:bg-navy-900 p-6 rounded-xl">بطاقة 3 للحاسوب</div>
-        </div>
-      </div>
-    </div>
-  );
-}
+```
