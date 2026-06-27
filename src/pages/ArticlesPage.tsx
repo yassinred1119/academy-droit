@@ -1,20 +1,36 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Search, Eye, Calendar, ChevronLeft } from 'lucide-react';
 
 const tabs = ['الأحدث', 'المميزة', 'القانون المدني', 'القانون الجنائي', 'قانون العائلة', 'القانون الدستوري', 'قانون الشغل'];
 
-const articles = [
+// المقالات الاحتياطية في حال لم يجد ملف JSON بعد
+const initialArticles = [
   { id: 1, title: 'مبدأ حسن النية في القانون المدني المغربي', author: 'د. محمد الكتاني', date: '2024/10/15', views: 1240, category: 'القانون المدني', image: 'https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg?auto=compress&cs=tinysrgb&w=300&h=180&fit=crop', featured: true },
-  { id: 2, title: 'النفس في الاختصاص في قضايا الأحداث', author: 'أ. سارة المنصوري', date: '2024/10/12', views: 980, category: 'القانون الجنائي', image: 'https://images.pexels.com/photos/5669619/pexels-photo-5669619.jpeg?auto=compress&cs=tinysrgb&w=300&h=180&fit=crop', featured: false },
-  { id: 3, title: 'مسؤولية الدولة عن أعمالها الإدارية', author: 'د. يوسف السلاوي', date: '2024/10/10', views: 756, category: 'القانون الدستوري', image: 'https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&w=300&h=180&fit=crop', featured: false },
-  { id: 4, title: 'شرح مفهوم الطلاق في مدونة الأسرة', author: 'د. فاطمة الزهراء', date: '2024/10/08', views: 2100, category: 'قانون العائلة', image: 'https://images.pexels.com/photos/3771097/pexels-photo-3771097.jpeg?auto=compress&cs=tinysrgb&w=300&h=180&fit=crop', featured: true },
-  { id: 5, title: 'حقوق العامل في حالة الفصل التعسفي', author: 'أ. كريم العمراني', date: '2024/10/05', views: 1890, category: 'قانون الشغل', image: 'https://images.pexels.com/photos/1575937/pexels-photo-1575937.jpeg?auto=compress&cs=tinysrgb&w=300&h=180&fit=crop', featured: false },
-  { id: 6, title: 'الجرائم الإلكترونية في القانون المغربي', author: 'د. محمد أمين', date: '2024/10/02', views: 3200, category: 'القانون الجنائي', image: 'https://images.pexels.com/photos/5668853/pexels-photo-5668853.jpeg?auto=compress&cs=tinysrgb&w=300&h=180&fit=crop', featured: true },
+  { id: 2, title: 'النفس في الاختصاص في قضايا الأحداث', author: 'أ. سارة المنصوري', date: '2024/10/12', views: 980, category: 'القانون الجنائي', image: 'https://images.pexels.com/photos/5669619/pexels-photo-5669619.jpeg?auto=compress&cs=tinysrgb&w=300&h=180&fit=crop', featured: false }
 ];
 
 export default function ArticlesPage() {
+  const [articles, setArticles] = useState(initialArticles);
   const [activeTab, setActiveTab] = useState('الأحدث');
   const [query, setQuery] = useState('');
+
+  // جلب المقالات ديناميكياً من الملف الذي تعدله لوحة التحكم
+  useEffect(() => {
+    fetch('/data/articles.json')
+      .then((res) => {
+        if (res.ok) return res.json();
+        throw new Error('File not found');
+      })
+      .then((data) => {
+        // لوحة التحكم تحفظها أحياناً داخل كائن يحتوي على القائمة
+        if (data && Array.isArray(data.articles)) {
+          setArticles(data.articles);
+        } else if (Array.isArray(data)) {
+          setArticles(data);
+        }
+      })
+      .catch((err) => console.log("قراءة المقالات الافتراضية الحالية:", err));
+  }, []);
 
   const filtered = articles.filter((a) => {
     const matchTab = activeTab === 'الأحدث' || activeTab === 'المميزة' ? (activeTab === 'المميزة' ? a.featured : true) : a.category === activeTab;
@@ -72,7 +88,7 @@ export default function ArticlesPage() {
               <div className="flex items-center gap-4 text-xs text-gray-400">
                 <span>{filtered[0].author}</span>
                 <span className="flex items-center gap-1"><Calendar className="w-3 h-3" />{filtered[0].date}</span>
-                <span className="flex items-center gap-1"><Eye className="w-3 h-3" />{filtered[0].views.toLocaleString()}</span>
+                <span className="flex items-center gap-1"><Eye className="w-3 h-3" />{filtered[0].views?.toLocaleString()}</span>
               </div>
               <button className="mt-4 flex items-center gap-1 text-sm text-gold-600 font-medium hover:text-gold-500">
                 قراءة المقال <ChevronLeft className="w-4 h-4" />
@@ -83,8 +99,8 @@ export default function ArticlesPage() {
 
         {/* Article list */}
         <div className="flex flex-col gap-3">
-          {filtered.slice(1, 5).map((article) => (
-            <div key={article.id} className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 flex gap-3 group hover:shadow-md transition-shadow">
+          {filtered.slice(1, 5).map((article, index) => (
+            <div key={article.id || index} className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 flex gap-3 group hover:shadow-md transition-shadow">
               <img src={article.image} alt={article.title} className="w-20 h-16 object-cover rounded-lg shrink-0" />
               <div className="flex-1 min-w-0">
                 <span className="text-[10px] text-gold-600 font-bold">{article.category}</span>
@@ -102,8 +118,8 @@ export default function ArticlesPage() {
       {/* Remaining articles grid */}
       {filtered.length > 5 && (
         <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filtered.slice(5).map((article) => (
-            <div key={article.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group hover:shadow-md transition-shadow">
+          {filtered.slice(5).map((article, index) => (
+            <div key={article.id || index} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group hover:shadow-md transition-shadow">
               <img src={article.image} alt={article.title} className="w-full h-36 object-cover group-hover:scale-105 transition-transform duration-300" />
               <div className="p-4">
                 <span className="text-[10px] text-gold-600 font-bold">{article.category}</span>
