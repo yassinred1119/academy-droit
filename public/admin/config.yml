@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: yassinred1119/academy-droit # اسم حسابك والمستودع بدقة
+  repo: yassinred1119/academy-droit
   branch: main
 
 media_folder: "public/images"
@@ -10,7 +10,6 @@ collections:
   - name: "articles"
     label: "المقالات"
     label_singular: "مقال"
-    # التعديل السحري: الحفظ في ملف JSON واحد داخل مجلد public لتسهيل قراءته في React
     type: "file"
     file: "public/data/articles.json"
     format: "json"
@@ -40,9 +39,9 @@ collections:
       - { label: "عدد الصفحات (مثال: 85 صفحة)", name: "pages", widget: "string" }
       - { label: "عدد التحميلات التخيلي (مثال: 4,200 تحميل)", name: "downloads", widget: "string", default: "1,200 تحميل" }
       - { label: "رابط الصورة المعبرة", name: "image", widget: "string", default: "https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg" }
-      - { label: "رابط ملف الـ PDF للتحميل", name: "pdfUrl", widget: "string", hint: "ضع رابط جوجل درايف أو الملف المرفوع" }
+      - { label: "رابط ملف الـ PDF للتحميل", name: "pdfUrl", widget: "string" }
 
-- name: "seminars"
+  - name: "seminars"
     label: "الندوات والمؤتمرات"
     label_singular: "ندوة"
     type: "file"
@@ -57,18 +56,18 @@ collections:
       - { label: "التوقيت (مثال: 18:00 - 20:00)", name: "time", widget: "string" }
       - { label: "التاريخ الكامل (مثال: 25 يونيو 2024)", name: "fullDate", widget: "string" }
       - { label: "نوع الندوة", name: "type", widget: "select", options: ["عبر الإنترنت", "حضوري"], default: "عبر الإنترنت" }
-      - { label: "رابط استمارة التسجيل (Google Forms)", name: "formLink", widget: "string", hint: "ضع هنا رابط الفورم لتسجيل بيانات الطلاب" }
+      - { label: "رابط استمارة التسجيل (Google Forms)", name: "formLink", widget: "string" }
 
-- name: "library"
+  - name: "library"
     label: "مكتبة القوانين"
     label_singular: "نص قانوني"
     type: "file"
-    file: "public/data/library.json" # سيتم حفظ بيانات المكتبة هنا
+    file: "public/data/library.json"
     format: "json"
     fields:
       - { label: "المعرف الرقمي (id)", name: "id", widget: "number", value_type: "int" }
-      - { label: "اسم القانون الكامل", name: "title", widget: "string", hint: "مثال: القانون رقم 12.01 المتعلق بالمسطرة المدنية" }
-      - { label: "نوع وثيقة القانون (وصف فرعي)", name: "subtitle", widget: "string", hint: "مثال: ظهير شريف رقم 1.02.01 - 180 صفحة" }
-      - { label: "تاريخ النشر / التحديث", name: "date", widget: "string", hint: "مثال: 2023/05/25" }
+      - { label: "اسم القانون الكامل", name: "title", widget: "string" }
+      - { label: "نوع وثيقة القانون (وصف فرعي)", name: "subtitle", widget: "string" }
+      - { label: "تاريخ النشر / التحديث", name: "date", widget: "string" }
       - { label: "التصنيف الرئيسي", name: "category", widget: "select", options: ["القانون الأساسي", "القانون المدني", "القانون الجنائي", "قانون الشغل", "القانون التجاري", "القانون الإداري", "قانون الأسرة"] }
-      - { label: "رابط الملف المباشر (PDF / Link)", name: "fileUrl", widget: "string", hint: "ضع هنا الرابط الذي سيفتح عند الضغط على زر عرض" }
+      - { label: "رابط الملف المباشر (PDF / Link)", name: "fileUrl", widget: "string" }
