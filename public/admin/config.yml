@@ -1,15 +1,26 @@
 backend:
   name: github
-  repo: yassinred1119/academy-droit
+  repo: yassinred1119/academy-droit # اسم حسابك والمستودع بدقة
   branch: main
-media_folder: "assets/images"
-public_folder: "/assets/images"
+
+media_folder: "public/images"
+public_folder: "/images"
+
 collections:
-  - name: "blog"
-    label: "Blog"
-    folder: "content/blog"
-    create: true
+  - name: "articles"
+    label: "المقالات"
+    label_singular: "مقال"
+    # التعديل السحري: الحفظ في ملف JSON واحد داخل مجلد public لتسهيل قراءته في React
+    type: "file"
+    file: "public/data/articles.json"
+    format: "json"
     fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Publish Date", name: "date", widget: "datetime"}
-      - {label: "Body", name: "body", widget: "markdown"}
+      - { label: "المعرف الرقمي (id)", name: "id", widget: "number", value_type: "int" }
+      - { label: "العنوان", name: "title", widget: "string" }
+      - { label: "الكاتب", name: "author", widget: "string" }
+      - { label: "التاريخ (YYYY/MM/DD)", name: "date", widget: "string" }
+      - { label: "عدد المشاهدات التخيلي", name: "views", widget: "number", default: 100, value_type: "int" }
+      - { label: "التصنيف", name: "category", widget: "select", options: ["القانون المدني", "القانون الجنائي", "قانون العائلة", "القانون الدستوري", "قانون الشغل"] }
+      - { label: "رابط الصورة المعبرة", name: "image", widget: "string", default: "https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg" }
+      - { label: "مقال مميز؟", name: "featured", widget: "boolean", default: false }
+      - { label: "نص المقال بالكامل", name: "body", widget: "markdown" }
