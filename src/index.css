@@ -18,26 +18,19 @@
   }
 }
 
-/* ==========================================================================
-   1. نظام خلفيات الموقع (الوضع المضيء والداكن)
-   ========================================================================== */
-
+/* --- ألوان خلفية الموقع الأساسية --- */
 body {
-  background-color: #ffffff; /* بيضاء ناصعة نهاراً */
-  color: #0f172a;
+  background-color: #ffffff !important;
+  color: #0f172a !important;
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 html.dark body {
-  background-color: #09090b; /* سوداء ليلية فخمة */
-  color: #f8fafc;
+  background-color: #09090b !important;
+  color: #f8fafc !important;
 }
 
-/* ==========================================================================
-   2. الألوان الملكية للأكاديمية
-   ========================================================================== */
-
-/* درجات الأزرق الملكي (Navy) */
+/* --- الألوان الملكية للأكاديمية --- */
 .bg-navy-900 {
   background-color: #0f172a !important;
 }
@@ -46,29 +39,12 @@ html.dark body {
   color: #0f172a !important;
 }
 
-.bg-navy-950 {
-  background-color: #090d16 !important;
-}
-
-.text-navy-950 {
-  color: #090d16 !important;
-}
-
-/* درجات الذهبي الفخم (Gold) */
 .bg-gold-500 {
-  background-color: #eab308 !important; /* ذهبي دافئ للأزرار */
-}
-
-.bg-gold-400 {
-  background-color: #facc15 !important;
-}
-
-.hover\:bg-gold-400:hover {
-  background-color: #facc15 !important;
+  background-color: #eab308 !important;
 }
 
 .text-gold-400 {
-  color: #facc15 !important; /* شعار الأكاديمية والنصوص */
+  color: #facc15 !important;
 }
 
 .text-gold-500 {
@@ -78,11 +54,6 @@ html.dark body {
 @layer utilities {
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
-  }
-
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
   }
 }
 
