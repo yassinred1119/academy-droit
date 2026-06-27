@@ -58,3 +58,17 @@ collections:
       - { label: "التاريخ الكامل (مثال: 25 يونيو 2024)", name: "fullDate", widget: "string" }
       - { label: "نوع الندوة", name: "type", widget: "select", options: ["عبر الإنترنت", "حضوري"], default: "عبر الإنترنت" }
       - { label: "رابط استمارة التسجيل (Google Forms)", name: "formLink", widget: "string", hint: "ضع هنا رابط الفورم لتسجيل بيانات الطلاب" }
+
+- name: "library"
+    label: "مكتبة القوانين"
+    label_singular: "نص قانوني"
+    type: "file"
+    file: "public/data/library.json" # سيتم حفظ بيانات المكتبة هنا
+    format: "json"
+    fields:
+      - { label: "المعرف الرقمي (id)", name: "id", widget: "number", value_type: "int" }
+      - { label: "اسم القانون الكامل", name: "title", widget: "string", hint: "مثال: القانون رقم 12.01 المتعلق بالمسطرة المدنية" }
+      - { label: "نوع وثيقة القانون (وصف فرعي)", name: "subtitle", widget: "string", hint: "مثال: ظهير شريف رقم 1.02.01 - 180 صفحة" }
+      - { label: "تاريخ النشر / التحديث", name: "date", widget: "string", hint: "مثال: 2023/05/25" }
+      - { label: "التصنيف الرئيسي", name: "category", widget: "select", options: ["القانون الأساسي", "القانون المدني", "القانون الجنائي", "قانون الشغل", "القانون التجاري", "القانون الإداري", "قانون الأسرة"] }
+      - { label: "رابط الملف المباشر (PDF / Link)", name: "fileUrl", widget: "string", hint: "ضع هنا الرابط الذي سيفتح عند الضغط على زر عرض" }
