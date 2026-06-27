@@ -37,3 +37,20 @@ collections:
       - { label: "اسم الأستاذ / المادة", name: "author", widget: "string" }
       - { label: "رابط ملف الـ PDF", name: "pdf_url", widget: "string", hint: "ضع هنا رابط ملف الـ PDF من جوجل درايف أو موقعك" }
       - { label: "وصف قصير للملخص", name: "description", widget: "text" }
+
+- name: "seminars"
+    label: "الندوات والمؤتمرات"
+    label_singular: "ندوة"
+    type: "file"
+    file: "public/data/seminars.json"
+    format: "json"
+    fields:
+      - { label: "المعرف الرقمي (id)", name: "id", widget: "number", value_type: "int" }
+      - { label: "عنوان الندوة", name: "title", widget: "string" }
+      - { label: "اسم الأستاذ / المحاضر", name: "speaker", widget: "string" }
+      - { label: "رقم اليوم فقط (مثال: 25)", name: "day", widget: "string" }
+      - { label: "اسم الشهر والسنة (مثال: يونيو 2024)", name: "monthYear", widget: "string" }
+      - { label: "التوقيت (مثال: 18:00 - 20:00)", name: "time", widget: "string" }
+      - { label: "التاريخ الكامل (مثال: 25 يونيو 2024)", name: "fullDate", widget: "string" }
+      - { label: "نوع الندوة", name: "type", widget: "select", options: ["عبر الإنترنت", "حضوري"], default: "عبر الإنترنت" }
+      - { label: "رابط استمارة التسجيل (Google Forms)", name: "formLink", widget: "string", hint: "ضع هنا رابط الفورم لتسجيل بيانات الطلاب" }
