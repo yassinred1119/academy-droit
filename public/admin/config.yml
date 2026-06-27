@@ -24,3 +24,16 @@ collections:
       - { label: "رابط الصورة المعبرة", name: "image", widget: "string", default: "https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg" }
       - { label: "مقال مميز؟", name: "featured", widget: "boolean", default: false }
       - { label: "نص المقال بالكامل", name: "body", widget: "markdown" }
+
+  - name: "summaries"
+    label: "الملخصات القانونية"
+    label_singular: "ملخص"
+    type: "file"
+    file: "public/data/summaries.json" # سيتم حفظ الملخصات هنا
+    format: "json"
+    fields:
+      - { label: "المعرف الرقمي (id)", name: "id", widget: "number", value_type: "int" }
+      - { label: "عنوان الملخص", name: "title", widget: "string" }
+      - { label: "اسم الأستاذ / المادة", name: "author", widget: "string" }
+      - { label: "رابط ملف الـ PDF", name: "pdf_url", widget: "string", hint: "ضع هنا رابط ملف الـ PDF من جوجل درايف أو موقعك" }
+      - { label: "وصف قصير للملخص", name: "description", widget: "text" }
