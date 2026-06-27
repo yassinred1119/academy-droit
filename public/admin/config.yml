@@ -29,14 +29,18 @@ collections:
     label: "الملخصات القانونية"
     label_singular: "ملخص"
     type: "file"
-    file: "public/data/summaries.json" # سيتم حفظ الملخصات هنا
+    file: "public/data/summaries.json"
     format: "json"
     fields:
       - { label: "المعرف الرقمي (id)", name: "id", widget: "number", value_type: "int" }
-      - { label: "عنوان الملخص", name: "title", widget: "string" }
-      - { label: "اسم الأستاذ / المادة", name: "author", widget: "string" }
-      - { label: "رابط ملف الـ PDF", name: "pdf_url", widget: "string", hint: "ضع هنا رابط ملف الـ PDF من جوجل درايف أو موقعك" }
-      - { label: "وصف قصير للملخص", name: "description", widget: "text" }
+      - { label: "عنوان المادة / الملخص", name: "title", widget: "string" }
+      - { label: "وصف فرعي للملخص", name: "description", widget: "string" }
+      - { label: "السنة الدراسية", name: "yearTag", widget: "select", options: ["السنة الأولى", "السنة الثانية", "السنة الثالثة", "السنة الرابعة"] }
+      - { label: "نوع الملخص", name: "status", widget: "select", options: ["مجاني", "مدفوع"], default: "مجاني" }
+      - { label: "عدد الصفحات (مثال: 85 صفحة)", name: "pages", widget: "string" }
+      - { label: "عدد التحميلات التخيلي (مثال: 4,200 تحميل)", name: "downloads", widget: "string", default: "1,200 تحميل" }
+      - { label: "رابط الصورة المعبرة", name: "image", widget: "string", default: "https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg" }
+      - { label: "رابط ملف الـ PDF للتحميل", name: "pdfUrl", widget: "string", hint: "ضع رابط جوجل درايف أو الملف المرفوع" }
 
 - name: "seminars"
     label: "الندوات والمؤتمرات"
