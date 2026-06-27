@@ -11,9 +11,10 @@
     direction: rtl;
   }
 
+  /* جعل الـ body يتفاعل ديناميكياً مع الوضع المضيء والداكن بشكل تلقائي وسلس */
   body {
-    background-color: #f0ede8;
-    color: #1a1a1a;
+    @apply bg-[#f0ede8] text-[#1a1a1a] dark:bg-slate-950 dark:text-slate-100;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
 
@@ -21,6 +22,7 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
