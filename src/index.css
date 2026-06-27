@@ -82,3 +82,39 @@ html.dark body {
     scrollbar-width: none;
   }
 }
+export default function HomePage() {
+  return (
+    <div>
+      {/* 📱 النسخة الأولى: مخصصة للهاتف فقط */}
+      {/* (تظهر على الشاشات الصغيرة، وتختفي تماماً من شاشات الحاسوب الكبيرة md:hidden) */}
+      <div className="block md:hidden bg-slate-50 dark:bg-zinc-950 px-4 py-6">
+        {/* اذكر هنا كل الأكواد والتصميم الذي تريده أن يظهر في الهاتف فقط */}
+        <h1 className="text-xl font-bold text-center text-gold-500">
+          مرحباً بك في الأكاديمية (نسخة الهاتف)
+        </h1>
+        
+        {/* مثال: ترتيب عمودي للبطاقات يناسب شاشة الجوال */}
+        <div className="flex flex-col gap-4 mt-6">
+          <div className="bg-white dark:bg-zinc-900 p-4 rounded-xl shadow">بطاقة 1 في الهاتف</div>
+          <div className="bg-white dark:bg-zinc-900 p-4 rounded-xl shadow">بطاقة 2 في الهاتف</div>
+        </div>
+      </div>
+
+      {/* 💻 النسخة الثانية: مخصصة للحاسوب فقط */}
+      {/* (تختفي تماماً في الهاتف hidden، وتظهر فقط بدءاً من شاشات الحاسوب md:block) */}
+      <div className="hidden md:block bg-white dark:bg-navy-950 p-10">
+        {/* هنا تضع كودك الحالي والقديم المخصص للحاسوب بدون أي تغيير */}
+        <h1 className="text-3xl font-bold text-navy-900 dark:text-slate-100">
+          مرحباً بك في أكاديمية القانون المغربي (نسخة الحاسوب)
+        </h1>
+
+        {/* مثال: تصميم شبكة عريضة بجانب بعضها للحاسوب */}
+        <div className="grid grid-cols-3 gap-6 mt-8">
+          <div className="bg-slate-50 dark:bg-navy-900 p-6 rounded-xl">بطاقة 1 للحاسوب</div>
+          <div className="bg-slate-50 dark:bg-navy-900 p-6 rounded-xl">بطاقة 2 للحاسوب</div>
+          <div className="bg-slate-50 dark:bg-navy-900 p-6 rounded-xl">بطاقة 3 للحاسوب</div>
+        </div>
+      </div>
+    </div>
+  );
+}
