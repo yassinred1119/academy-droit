@@ -55,46 +55,7 @@ export default function HomePage() {
   return (
     <div className="w-full min-h-screen text-right font-['Tajawal'] bg-[#f8fafc]" dir="rtl">
       
-      {/* 🏛️ 1. الشريط العلوي الملكي الممتاز (Navbar) */}
-      <header className="w-full bg-[#0f172a] text-white shadow-md sticky top-0 z-50">
-        <div className="max-w-[1440px] mx-auto px-6 h-16 flex items-center justify-between">
-          
-          {/* اليمين: اللوجو واسم الأكاديمية */}
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-amber-500 rounded-lg flex items-center justify-center text-xl shadow-inner">⚖️</div>
-            <div>
-              <span className="font-black text-base block tracking-wide">أكاديمية القانون</span>
-              <span className="text-[10px] text-amber-400 block -mt-1 font-medium">منصة القانون المغربي الأولى</span>
-            </div>
-          </div>
-
-          {/* المنتصف: أزرار القائمة الرئيسية */}
-          <nav className="hidden lg:flex items-center gap-6 text-xs font-bold text-slate-200">
-            <a href="/" className="text-amber-400 border-b-2 border-amber-400 pb-1">الرئيسية</a>
-            <a href="/academy" className="hover:text-white transition-colors">الأكاديمية</a>
-            <a href="/library" className="hover:text-white transition-colors">مكتبة القوانين</a>
-            <a href="/articles" className="hover:text-white transition-colors">المقالات</a>
-            <a href="/summaries" className="hover:text-white transition-colors">الملخصات</a>
-            <a href="/seminars" className="hover:text-white transition-colors">الندوات</a>
-            <a href="/news" className="hover:text-white transition-colors">الأخبار</a>
-            <div className="relative group cursor-pointer">
-              <span className="hover:text-white flex items-center gap-0.5">المزيد ▾</span>
-            </div>
-          </nav>
-
-          {/* اليسار: أزرار تسجيل الدخول وإنشاء حساب والأيقونات */}
-          <div className="flex items-center gap-3">
-            <button className="p-2 hover:bg-slate-800 rounded-lg text-sm text-slate-300">🌙</button>
-            <button className="p-2 hover:bg-slate-800 rounded-lg text-sm text-slate-300 relative">🔔<span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span></button>
-            <a href="/login" className="hidden sm:inline-block text-xs font-bold text-slate-300 hover:text-white px-3 py-2">تسجيل الدخول</a>
-            <a href="/register" className="bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-xs px-4 py-2 rounded-xl transition-colors shadow-md">
-              ✨ إنشاء حساب
-            </a>
-          </div>
-        </div>
-      </header>
-
-      {/* 🗂️ 2. الهيكل الرئيسي للموقع المقسم إلى أعمدة (Grid Layout) */}
+      {/* 🗂️ الهيكل الرئيسي للموقع المقسم إلى أعمدة (بدون الـ Navbar المكرر) */}
       <main className="max-w-[1440px] mx-auto px-6 py-6 grid grid-cols-1 lg:grid-cols-4 gap-6">
         
         {/* العمود الأيمن: الترحيب والأدوات السريعة الجانبية */}
@@ -263,12 +224,6 @@ export default function HomePage() {
         </div>
 
       </main>
-
-      {/* 👑 شريط التذييل (Footer) */}
-      <footer className="w-full bg-[#0f172a] text-slate-400 text-center py-4 border-t border-slate-800 text-[11px] mt-12">
-        جميع الحقوق محفوظة © أكاديمية القانون المغربي الباحث القانوني الأول 2026
-      </footer>
-
     </div>
   );
 }
