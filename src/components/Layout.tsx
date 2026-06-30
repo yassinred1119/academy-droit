@@ -1,26 +1,38 @@
-import { useState } from 'react';
-import { useRouter } from '../router'; // استدعاء نفس الراوتر الموحد للمشروع
+import { useState, useEffect } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 
-interface Props {
+interface LayoutProps {
   children: React.ReactNode;
 }
 
-export default function Layout({ children }: Props) {
-  const [darkMode, setDarkMode] = useState(false);
-  const { navigate } = useRouter(); // استخدام خطاف التوجيه الموحد
+export default function Layout({ children }: LayoutProps) {
+  // إدارة حالة النظام اللوني ديناميكياً وحفظ خيار المستخدم في المتصفح
+  const [darkMode, setDarkMode] = useState(() => {
+    const savedTheme = localStorage.getItem('theme');
+    return savedTheme === 'dark';
+  });
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [darkMode]);
 
   return (
-    <div className={`min-h-screen flex flex-col font-['Tajawal'] ${darkMode ? 'dark bg-slate-900 text-white' : 'bg-[#f8fafc] text-slate-900'}`}>
-      <Header 
-        darkMode={darkMode} 
-        setDarkMode={setDarkMode} 
-        onLoginClick={() => navigate('/Maintenance')} // التوجيه السلس لصفحة الصيانة عند الضغط على تسجيل الدخول
-      />
-      <main className="flex-grow w-full">
+    <div className="min-h-screen flex flex-col transition-colors duration-300 bg-[#f8fafc] dark:bg-[#0f172a]" dir="rtl">
+      {/* تمرير دالة التحكم إلى الهيدر */}
+      <Header darkMode={darkMode} setDarkMode={setDarkMode} />
+      
+      {/* محتوى الصفحة الرئيسي المتجاوب */}
+      <main className="flex-1 w-full animate-fade-in">
         {children}
       </main>
+      
       <Footer />
     </div>
   );

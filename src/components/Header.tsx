@@ -1,53 +1,38 @@
 import { Link, useRouter } from '../router';
-import { useEffect } from 'react';
 
 const navLinks = [
   { label: 'الرئيسية', path: '/' },
-  { label: 'الأكاديمية', path: '/academy' },
   { label: 'مكتبة القوانين', path: '/library' },
-  { label: 'المقالات', path: '/articles' },
+  { label: 'المقالات القانونية', path: '/articles' },
   { label: 'الملخصات', path: '/summaries' },
-  { label: 'الندوات', path: '/seminars' },
-  { label: 'الأخبار', path: '/news' },
-  { label: 'المزيد', path: '/community', hasArrow: true },
+  { label: 'الندوات العلمية', path: '/seminars' },
+  { label: 'آخر الأخبار', path: '/news' },
 ];
 
-interface Props {
+interface HeaderProps {
   darkMode: boolean;
   setDarkMode: (v: boolean) => void;
-  onLoginClick: () => void;
 }
 
-export default function Header({ darkMode, setDarkMode, onLoginClick }: Props) {
+export default function Header({ darkMode, setDarkMode }: HeaderProps) {
   const { path } = useRouter();
 
-  // إدارة إضافة وحذف كلاس الـ dark من وسم الـ html
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  }, [darkMode]);
-
   return (
-    <header className="bg-white text-slate-800 sticky top-0 z-50 shadow-md border-b border-slate-100" dir="rtl">
-      <div className="max-w-[1400px] mx-auto px-4 h-16 flex items-center gap-4">
+    <header className="bg-white dark:bg-[#1e293b] text-slate-800 dark:text-slate-100 sticky top-0 z-50 shadow-sm border-b border-slate-100 dark:border-slate-800/50 transition-colors duration-300">
+      <div className="max-w-[1600px] mx-auto px-4 h-16 flex items-center justify-between gap-4">
         
-        {/* الشعار والاسم على اليمين */}
+        {/* البراند والشعار القانوني الفخم */}
         <Link to="/" className="flex items-center gap-2 shrink-0">
-          <div className="w-10 h-10 bg-amber-600 rounded-lg flex items-center justify-center text-lg text-white">
-            ⚖️
+          <div className="w-9 h-9 bg-amber-600 dark:bg-amber-700 rounded-lg flex items-center justify-center text-base text-white font-serif font-black shadow-sm">
+            ق
           </div>
-          <div className="text-right leading-tight">
-            <div className="font-bold text-slate-900 text-base">أكاديمية القانون المغربي</div>
-            <div className="text-[10px] text-slate-500">منصة قانونية متكاملة</div>
+          <div className="text-right leading-tight hidden sm:block">
+            <div className="font-black text-slate-900 dark:text-white text-sm md:text-base">منصة القانون المغربي</div>
+            <div className="text-[9px] text-slate-400 dark:text-slate-400 font-medium">بوابة التشريع والمحتوى الحي</div>
           </div>
         </Link>
 
-        {/* القائمة البرمجية للتنقل بـ ألوان واضحة جداً */}
+        {/* أزرار التنقل النظيفة والمتجاوبة - تختفي في الموبايل لتوفير مساحة وتظهر كشريط عريض في الحواسيب */}
         <nav className="hidden lg:flex items-center gap-1 flex-1 justify-center">
           {navLinks.map((link) => {
             const isActive = path === link.path;
@@ -55,54 +40,39 @@ export default function Header({ darkMode, setDarkMode, onLoginClick }: Props) {
               <Link
                 key={link.label}
                 to={link.path}
-                className={`px-3 py-2 text-sm font-bold transition-colors flex items-center gap-1 border-b-2 ${
+                className={`px-4 py-2 text-xs md:text-sm font-bold transition-all border-b-2 rounded-t-lg ${
                   isActive
-                    ? 'text-amber-600 border-amber-600'
-                    : 'text-slate-600 hover:text-slate-900 border-transparent hover:border-slate-200'
+                    ? 'text-amber-600 dark:text-amber-500 border-amber-600 dark:border-amber-500 bg-amber-50/30 dark:bg-amber-500/5'
+                    : 'text-slate-600 dark:text-slate-300 border-transparent hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50'
                 }`}
               >
                 {link.label}
-                {link.hasArrow && <span className="text-[10px] text-slate-400">▼</span>}
               </Link>
             );
           })}
         </nav>
 
-        {/* الأزرار التفاعلية على اليسار */}
-        <div className="flex items-center gap-2 shrink-0 mr-auto">
+        {/* أدوات التحكم الجانبية: زر التبديل الميكانيكي وزر الإشعارات الصامت */}
+        <div className="flex items-center gap-2 shrink-0">
           
-          {/* زر تبديل الوضع */}
+          {/* زر تبديل الألوان الذكي (Light / Dark Mode Switcher) */}
           <button
             onClick={() => setDarkMode(!darkMode)}
-            className="w-8 h-8 rounded-full flex items-center justify-center text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors text-sm"
-            title={darkMode ? "تفعيل الوضع المضيء" : "تفعيل الوضع الداكن"}
+            aria-label="Toggle Theme"
+            className="w-9 h-9 rounded-xl flex items-center justify-center border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all text-sm shadow-2xl"
           >
-            {darkMode ? <span>☀️</span> : <span>🌙</span>}
+            {darkMode ? (
+              <span className="text-amber-400">☀️</span>
+            ) : (
+              <span className="text-slate-700">🌙</span>
+            )}
           </button>
 
-          {/* زر التنبيهات */}
-          <button className="w-8 h-8 rounded-full flex items-center justify-center text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors relative text-sm">
-            🔔
-            <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
+          {/* زر التنبيهات النظيف */}
+          <button className="w-9 h-9 rounded-xl flex items-center justify-center border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors relative text-sm">
+            <span>🔔</span>
+            <span className="absolute top-2.5 right-2.5 w-1.5 h-1.5 bg-amber-600 dark:bg-amber-500 rounded-full" />
           </button>
-
-          {/* زر تسجيل الدخول */}
-          <button
-            onClick={onLoginClick}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-600 hover:text-slate-900 font-bold transition-colors"
-          >
-            <span className="text-xs">👤</span>
-            تسجيل الدخول
-          </button>
-
-          {/* زر إنشاء حساب */}
-          <Link
-            to="/Maintenance"
-            className="flex items-center gap-1.5 px-4 py-1.5 bg-amber-600 hover:bg-amber-700 text-white text-sm font-bold rounded-lg transition-colors shadow-sm"
-          >
-            <span className="text-xs">➕</span>
-            إنشاء حساب
-          </Link>
           
         </div>
       </div>
