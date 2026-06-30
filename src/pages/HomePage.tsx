@@ -121,6 +121,21 @@ export default function HomePage() {
           ))}
         </div>
 
+        {/* قسم الإحصائيات الفخم المعروض بشكل آمن وسليم */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          {stats.map((stat, idx) => (
+            <div key={idx} className="bg-white border border-slate-100 p-6 rounded-2xl flex items-center justify-between shadow-sm">
+              <div className="text-right">
+                <p className="text-slate-500 text-[11px] font-bold mb-1">{stat.label}</p>
+                <h4 className="text-xl font-black text-[#0f172a]">{stat.value}</h4>
+              </div>
+              <div className="text-2xl bg-slate-50 w-12 h-12 rounded-xl flex items-center justify-center">
+                {stat.icon}
+              </div>
+            </div>
+          ))}
+        </div>
+
         {/* عرض المواد الحية المجلوبة من Supabase */}
         <div className="bg-white border border-slate-100 rounded-2xl p-6 mb-6">
           <h3 className="font-black text-slate-900 text-xs mb-4 pb-2 border-b">📚 المواد القانونية المتوفرة حالياً</h3>
