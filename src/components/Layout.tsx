@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useLocation } from 'wouter'; // يجب أن يكون هنا في الأعلى
+import { useRouter } from '../router'; // استدعاء نفس الراوتر الموحد للمشروع
 import Header from './Header';
 import Footer from './Footer';
 
@@ -9,16 +9,18 @@ interface Props {
 
 export default function Layout({ children }: Props) {
   const [darkMode, setDarkMode] = useState(false);
-  const [_, setLocation] = useLocation(); // استدعاء الخطاف هنا
+  const { navigate } = useRouter(); // استخدام خطاف التوجيه الموحد
 
   return (
-    <div className="min-h-screen bg-gray-100 font-arabic flex flex-col">
+    <div className={`min-h-screen flex flex-col font-['Tajawal'] ${darkMode ? 'dark bg-slate-900 text-white' : 'bg-[#f8fafc] text-slate-900'}`}>
       <Header 
         darkMode={darkMode} 
         setDarkMode={setDarkMode} 
-        onLoginClick={() => setLocation('/Maintenance')} 
+        onLoginClick={() => navigate('/Maintenance')} // التوجيه السلس لصفحة الصيانة عند الضغط على تسجيل الدخول
       />
-      <main className="flex-1">{children}</main>
+      <main className="flex-grow w-full">
+        {children}
+      </main>
       <Footer />
     </div>
   );

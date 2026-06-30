@@ -1,4 +1,3 @@
-import { Bell, Moon, Sun, User, UserPlus, Scale, ChevronDown } from 'lucide-react';
 import { Link, useRouter } from '../router';
 import { useEffect } from 'react';
 
@@ -34,13 +33,13 @@ export default function Header({ darkMode, setDarkMode, onLoginClick }: Props) {
   }, [darkMode]);
 
   return (
-    <header className="bg-navy-900 text-white sticky top-0 z-50 shadow-lg">
+    <header className="bg-navy-900 text-white sticky top-0 z-50 shadow-lg" dir="rtl">
       <div className="max-w-[1400px] mx-auto px-4 h-16 flex items-center gap-4">
         
         {/* الشعار والاسم على اليمين */}
         <Link to="/" className="flex items-center gap-2 shrink-0">
-          <div className="w-10 h-10 bg-gold-500 rounded-lg flex items-center justify-center">
-            <Scale className="w-5 h-5 text-navy-900" />
+          <div className="w-10 h-10 bg-gold-500 rounded-lg flex items-center justify-center text-lg">
+            ⚖️
           </div>
           <div className="text-right leading-tight">
             <div className="font-bold text-gold-400 text-base">أكاديمية القانون المغربي</div>
@@ -63,7 +62,7 @@ export default function Header({ darkMode, setDarkMode, onLoginClick }: Props) {
                 }`}
               >
                 {link.label}
-                {link.hasArrow && <ChevronDown className="w-3 h-3" />}
+                {link.hasArrow && <span className="text-[10px]">▼</span>}
               </Link>
             );
           })}
@@ -75,15 +74,15 @@ export default function Header({ darkMode, setDarkMode, onLoginClick }: Props) {
           {/* زر تبديل الوضع الداكن / المضيء النظيف والتفاعلي */}
           <button
             onClick={() => setDarkMode(!darkMode)}
-            className="w-8 h-8 rounded-full flex items-center justify-center text-navy-300 hover:text-white hover:bg-navy-700 transition-colors"
+            className="w-8 h-8 rounded-full flex items-center justify-center text-navy-300 hover:text-white hover:bg-navy-700 transition-colors text-sm"
             title={darkMode ? "تفعيل الوضع المضيء" : "تفعيل الوضع الداكن"}
           >
-            {darkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4" />}
+            {darkMode ? <span>☀️</span> : <span>🌙</span>}
           </button>
 
           {/* زر التنبيهات */}
-          <button className="w-8 h-8 rounded-full flex items-center justify-center text-navy-300 hover:text-white hover:bg-navy-700 transition-colors relative">
-            <Bell className="w-4 h-4" />
+          <button className="w-8 h-8 rounded-full flex items-center justify-center text-navy-300 hover:text-white hover:bg-navy-700 transition-colors relative text-sm">
+            🔔
             <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
           </button>
 
@@ -92,7 +91,7 @@ export default function Header({ darkMode, setDarkMode, onLoginClick }: Props) {
             onClick={onLoginClick}
             className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-navy-200 hover:text-white transition-colors"
           >
-            <User className="w-4 h-4" />
+            <span className="text-xs">👤</span>
             تسجيل الدخول
           </button>
 
@@ -101,7 +100,7 @@ export default function Header({ darkMode, setDarkMode, onLoginClick }: Props) {
             to="/Maintenance"
             className="flex items-center gap-1.5 px-4 py-1.5 bg-gold-500 hover:bg-gold-400 text-navy-900 text-sm font-bold rounded-lg transition-colors"
           >
-            <UserPlus className="w-4 h-4" />
+            <span className="text-xs">➕</span>
             إنشاء حساب
           </Link>
           

@@ -1,4 +1,3 @@
-import { Scale } from 'lucide-react';
 import { Link } from '../router';
 
 const cols = [
@@ -24,7 +23,7 @@ const cols = [
     title: 'المجتمع',
     links: [
       { label: 'المجتمع القانوني', to: '/community' },
-      { label: 'profile', to: '/Maintenance.tsx' },
+      { label: 'الملف الشخصي', to: '/Maintenance' },
       { label: 'الباقات', to: '/' },
       { label: 'الدعم الفني', to: '/' },
     ],
@@ -35,19 +34,20 @@ const trust = [
   { icon: '★', label: 'مصادر موثوقة', sub: 'محتوى من مصادر رسمية' },
   { icon: '↺', label: 'محدث باستمرار', sub: 'تحديث المحتوى أولاً بأول' },
   { icon: '⛨', label: 'آمن وموثوق', sub: 'حماية بياناتك وخصوصيتك' },
-  { icon: '?', label: 'دعم فني', sub: 'نحن هنا لمساعدتك' },
+  { icon: '❓', label: 'دعم فني', sub: 'نحن هنا لمساعدتك' },
 ];
 
 export default function Footer() {
   return (
-    <footer className="bg-navy-950 text-navy-300 py-10 mt-6">
+    <footer className="bg-navy-950 text-navy-300 py-10 mt-6" dir="rtl">
       <div className="max-w-[1400px] mx-auto px-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-          {/* Brand */}
+          
+          {/* البراند والتعريف */}
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-8 h-8 bg-gold-500 rounded-lg flex items-center justify-center">
-                <Scale className="w-4 h-4 text-navy-900" />
+              <div className="w-8 h-8 bg-gold-500 rounded-lg flex items-center justify-center text-sm">
+                ⚖️
               </div>
               <span className="font-bold text-gold-400">أكاديمية القانون المغربي</span>
             </div>
@@ -66,7 +66,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Link columns */}
+          {/* أعمدة الروابط */}
           {cols.map((col) => (
             <div key={col.title}>
               <h4 className="font-bold text-white text-sm mb-3">{col.title}</h4>
@@ -83,12 +83,12 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Bottom bar */}
+        {/* الشريط السفلي وشعارات الثقة */}
         <div className="border-t border-navy-800 pt-6 flex flex-col lg:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-navy-500">© 2024 أكاديمية القانون المغربي. جميع الحقوق محفوظة.</p>
+          <p className="text-xs text-navy-500">© {new Date().getFullYear()} أكاديمية القانون المغربي. جميع الحقوق محفوظة.</p>
           <div className="hidden lg:flex items-center gap-6">
             {trust.map((item) => (
-              <div key={item.label} className="flex items-center gap-2">
+              <div key={item.label} className="flex items-center gap-2 text-right">
                 <span className="text-gold-500 text-base">{item.icon}</span>
                 <div>
                   <div className="text-xs font-bold text-white">{item.label}</div>
